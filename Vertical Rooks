@@ -1,0 +1,40 @@
+import java.io.*;
+import java.math.*;
+import java.text.*;
+import java.util.*;
+import java.util.regex.*;
+
+public class Solution {
+
+   
+
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        while(scanner.hasNext()) {
+            int T = scanner.nextInt();
+            while(T-- > 0) {
+                int n = scanner.nextInt();
+                int[] one = new int[n];
+                for(int i=0; i<n; i++) {
+                    one[i] = scanner.nextInt();
+                }
+                int[] two = new int[n];
+                for(int i=0; i<n; i++) {
+                    two[i] = scanner.nextInt();
+                }
+                int xor = 0;
+                for(int i=0; i<n; i++) {
+                    xor ^= (Math.abs(one[i] - two[i]) - 1);
+                }
+                if(xor != 0) {
+                    System.out.println("player-2");
+                }
+                else {
+                    System.out.println("player-1");
+                }
+            }
+        }
+        scanner.close();
+    }
+}
