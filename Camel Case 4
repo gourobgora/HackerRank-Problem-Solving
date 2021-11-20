@@ -1,0 +1,64 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class CamelCase4 {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner scanner = new Scanner(System.in);
+
+        while (scanner.hasNextLine()) {
+
+            String[] input = scanner.nextLine().split(";");
+            String operation = input[0];
+            String category = input[1];
+            String textToConvert = input[2];
+            String newText = "";
+
+            switch (operation) {
+                case ("S"):
+                    String[] splitText = textToConvert.split("(?=[A-Z()])");
+                    for (int i = 0; i < splitText.length; i++) {
+                        if (!(splitText[i].equals("(") || splitText[i].equals(")")))
+                            newText = newText.concat(splitText[i] + " ");
+                    }
+                    System.out.println(newText.trim().toLowerCase());
+                    break;
+
+                case ("C"):
+                    String[] combineText = textToConvert.split(" ");
+                    switch (category) {
+                        case ("V"):
+                        case ("M"):
+                            newText = newText.concat(combineText[0]);
+                            for (int i = 1; i < combineText.length; i++) {
+                                newText = newText.concat(combineText[i].substring(0, 1).toUpperCase() + combineText[i]
+                                        .substring(1));
+                            }
+                            if (category.equals("M"))
+                                System.out.println(newText.concat("()"));
+                            else {
+                                System.out.println(newText);
+                            }
+                            break;
+
+                        case ("C"):
+                            for (int i = 0; i < combineText.length; i++) {
+                                newText = newText.concat(combineText[i].substring(0, 1).toUpperCase() + combineText[i]
+                                        .substring(1));
+                            }
+                            System.out.println(newText);
+                            break;
+
+                        default:
+                            break;
+
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+   
+}
