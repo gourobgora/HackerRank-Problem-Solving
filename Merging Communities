@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] line = scanner.nextLine().split(" ");
+        int n = Integer.valueOf(line[0]);
+        int q = Integer.valueOf(line[1]);
+
+        int[] arr = new int[n+1];
+        for(int i=0; i<=n; i++) {
+            arr[i] = -1;
+        }
+
+        for(int i=0; i<q; i++) {
+            line = scanner.nextLine().split(" ");
+            
+            if(line.length == 2) {
+                int a = Integer.valueOf(line[1]);
+                int root = getRoot(arr, a);
+                System.out.println(size(arr, root));
+            } else {
+                int a = Integer.valueOf(line[1]);
+                int b = Integer.valueOf(line[2]);
+                
+                int aroot = getRoot(arr, a);
+                int broot = getRoot(arr, b);
+                if(aroot == broot)
+                    continue;
+                
+                if(size(arr, aroot) > size(arr, broot)) {
+                    arr[aroot] += arr[broot];
+                    arr[broot] = aroot;
+                } else {
+                    arr[broot] += arr[aroot];
+                    arr[aroot] = broot;
+                }
+            }
+        }
+    }
+    
+    static int getRoot(int[] arr, int a) {
+        int root = a;
+        while(arr[root] > 0) {
+            root = arr[root];
+        }
+        
+        if(a != root)
+            arr[a] = root;
+        
+        return root;
+    }
+    
+    static int size(int[] arr, int a) {
+        return -1 * arr[a];
+    }
+}
