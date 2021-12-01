@@ -1,0 +1,52 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    public static void update(int[][][]cube, int x,int y, int z, int W) {
+        cube[x-1][y-1][z-1]=W;
+    }
+    public static long query(int[][][] cube, int x1, int y1, int z1, int x2, int y2, int z2) {
+        long total = 0L;
+        if (x1>x2) {
+            int temp = x1;
+            x1 = x2;
+            x2 = temp;
+        }
+        if (y1>y2) {
+            int temp = y1;
+            y1 = y2;
+            y2 = temp;
+        }
+        if (z1>z2) {
+            int temp = z1;
+            z1 = z2;
+            z2 = temp;
+        }
+        for (int i = x1; i<=x2; i++) {
+            for (int j = y1; j<=y2; j++) {
+                for (int k = z1; k<=z2; k++) {
+                    long temp = (long)cube[i-1][j-1][k-1];
+                    total+=temp;
+                }
+            }
+        }
+        return total;
+    }
+    public static void main(String[] args) {
+        Scanner inp = new Scanner(System.in);
+        int T = inp.nextInt();
+        for (int i =0; i<T; i++) {
+            int N = inp.nextInt();
+            int M = inp.nextInt();
+            int [][][] cube = new int [N][N][N];
+            for (int j = 0; j<M; j++) {
+                String op = inp.next();
+                if (op.equals("UPDATE")) {
+                    update(cube,inp.nextInt(),inp.nextInt(),inp.nextInt(),inp.nextInt());
+                } else {
+                    System.out.println(query(cube,inp.nextInt(),inp.nextInt(),inp.nextInt(),inp.nextInt(),inp.nextInt(),inp.nextInt()));
+                }
+            }
+        }
+    }
+}
