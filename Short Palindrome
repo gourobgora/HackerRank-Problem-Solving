@@ -1,0 +1,47 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    private static final long DENOM = 1000000000l + 7;
+    
+    private static long patternSearch(String input, String pattern) {
+        // pattern has length 4.
+        // Define an array W[i][j]. W[i][j] is the number of matches
+        long[] matches = new long[4];
+        matches[0] = 0; matches[1] = 0; matches[2] = 0; matches[3] = 0;
+        for (int i = 0; i < input.length(); i++) {
+            if (pattern.charAt(0) == input.charAt(i)) {
+                // dump 3 into 4, add 1 to 1
+                matches[3] = (matches[3] + matches[2]) % DENOM;
+            }
+            if (pattern.charAt(1) == input.charAt(i)) {
+                // dump 2 into 3, dump 1 into 2
+                matches[2] = (matches[2] + matches[1]) % DENOM;
+                matches[1] = (matches[1] + matches[0]) % DENOM;
+            }
+            if (pattern.charAt(0) == input.charAt(i)) {
+                matches[0] = matches[0] + 1;
+            }
+        }
+        return matches[3];
+    }
+    
+    private static long solve(String input) {
+        long tracker = 0;
+        for (char c = 'a'; c <= 'z'; c++) {
+            for (char c2 = 'a'; c2 <= 'z'; c2++) {
+                String pattern = String.format("%c%c%c%c", c, c2, c2, c);
+                tracker = (tracker + patternSearch(input, pattern)) % DENOM;
+            }
+        }
+        
+        return tracker % DENOM;
+    }
+    
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String task = br.readLine();
+        System.out.println(solve(task));
+    }
+}
